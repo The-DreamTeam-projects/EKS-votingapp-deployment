@@ -7,7 +7,7 @@ spec:
     storage: 20Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: gp2-new
+  storageClassName: gp2
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/data/mysql"
