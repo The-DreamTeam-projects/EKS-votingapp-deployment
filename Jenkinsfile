@@ -6,25 +6,25 @@ pipeline {
     }
 
     environment {
-        AWS_REGION = 'us-east-2'
+        AWS_REGION = 'us-west-2'
         EKS_CLUSTER_NAME = 'my-voting-app-cluster'
         NAMESPACE = 'voting-app'
-        MYSQL_IMAGE = 'mbinui/mysql:latest'
-        VOTING_APP_IMAGE = 'mbinui/votingapp:v1'
+        MYSQL_IMAGE = 'mysql:latest'
+        VOTING_APP_IMAGE = 'dreamteam2024/votingapp:v1'
     }
 
     stages {
-        stage('Set Script Permissions') {
-            steps {
-                sh 'chmod +x scripts/install-tools.sh'
-            }
-        }
+        // stage('Set Script Permissions') {
+        //     steps {
+        //         sh 'chmod +x scripts/install-tools.sh'
+        //     }
+        // }
 
-        stage('Install Tools') {
-            steps {
-                sh 'scripts/install-tools.sh'
-            }
-        }
+        // stage('Install Tools') {
+        //     steps {
+        //         sh 'scripts/install-tools.sh'
+        //     }
+        // }
 
         stage('Configure AWS CLI') {
             steps {
