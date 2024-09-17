@@ -180,3 +180,14 @@ SOME CHANGES TO MAKE
 3. ensure the deploy msql yaml has the default details in env
 4. build the image again with the default details in the application properties
 5. change our secret text in jenkins to take the default password
+
+
+our application should be exposed on cluster using service not localhost anymore so it should look thus
+spring.datasource.name=springboot
+spring.datasource.url=jdbc:mysql://mysql-service:3306/springboot
+spring.datasource.username=root
+spring.datasource.password=rootpassword
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+spring.jpa.hibernate.ddl-auto=update
+
