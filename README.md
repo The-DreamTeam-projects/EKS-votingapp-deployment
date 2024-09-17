@@ -165,3 +165,11 @@ Get Application URL: Retrieves and echoes the application URL for access.
 
 
 The iam script defines the IAM roles and policies for the EKS cluster and the EKS node group. The eks_cluster role has the AmazonEKSClusterPolicy attached, and the eks_node role has the AmazonEKSWorkerNodePolicy, AmazonEKS_CNI_Policy, and AmazonEC2ContainerRegistryReadOnly policies attached. These policies should provide the necessary permissions for your EKS cluster and nodes to function correctly
+
+
+SOME CHANGES TO MAKE
+1.when using mysql default image, you dont have to state it in the envt so far as you maintain the default details of port=3306, username=root and password=rootpassword
+2. ensure these details are the same in the application.properties of our code
+3. ensure the deploy msql yaml has the default details in env
+4. add the stage to build in our jenkinsfile or build the image again with the default details in the application properties
+5. change our secret text in jenkins to take the default password
