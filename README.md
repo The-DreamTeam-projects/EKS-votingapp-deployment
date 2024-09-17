@@ -175,7 +175,7 @@ These policies should provide the necessary permissions for your EKS cluster and
 
 
 SOME CHANGES TO MAKE
-1.when using mysql default image, you dont have to state it in the envt so far as you maintain the default details of port=3306, username=root and password=rootpassword
+1.when using mysql default image, you dont have to state it in the envt so far as you maintain the default details of port=3306, username=root and password=rootpassword and if you do, ensure under spec in the yaml,the container image = mysql:latest
 2. ensure these details are the same in the application.properties of our code
 3. ensure the deploy msql yaml has the default details in env
 4. build the image again with the default details in the application properties
