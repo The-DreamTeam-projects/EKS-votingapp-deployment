@@ -120,17 +120,17 @@ pipeline {
             }
         }
 
-        stage('Deploy Voting Application') {
-            when {
-                expression { params.ACTION == 'apply' }
-            }
-            steps {
-                sh '''
-                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-deployment.yml | kubectl apply -f -
-                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-service.yml | kubectl apply -f -
-                '''
-            }
-        }
+        // stage('Deploy Voting Application') {
+        //     when {
+        //         expression { params.ACTION == 'apply' }
+        //     }
+        //     steps {
+        //         sh '''
+        //         sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-deployment.yml | kubectl apply -f -
+        //         sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-service.yml | kubectl apply -f -
+        //         '''
+        //     }
+        // }
 
         stage('Verify Deployment') {
             when {
