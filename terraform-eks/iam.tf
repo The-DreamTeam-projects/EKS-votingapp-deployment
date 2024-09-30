@@ -93,19 +93,7 @@ resource "aws_iam_policy" "eks_node_policy" {
     ]
   })
 }
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "iam:PassRole",
-      "Resource": [
-        "arn:aws:iam::058264135500:role/eks-cluster-role",
-        "arn:aws:iam::058264135500:role/eks-node-role"
-      ]
-    }
-  ]
-}
+
 
 resource "aws_iam_role_policy_attachment" "eks_node" {
   role       = aws_iam_role.eks_node.name
