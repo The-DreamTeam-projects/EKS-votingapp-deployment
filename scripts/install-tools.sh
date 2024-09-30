@@ -13,9 +13,10 @@
 # eksctl version
 
 # # Install kubectl
-# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-# chmod +x kubectl
-# mv kubectl $INSTALL_DIR/kubectl
+# curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.0/2024-09-12/bin/linux/amd64/kubectl
+# chmod +x ./kubectl
+# mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+# echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 # kubectl version --client
 
 # # Install AWS CLI
