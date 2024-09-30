@@ -27,10 +27,10 @@
 # aws --version
 
 # # Install Terraform
-# curl -fsSL "https://releases.hashicorp.com/terraform/$(curl -sL https://releases.hashicorp.com/terraform/ | grep 'href="/terraform/[0-9]' | cut -d'/' -f3 | sort -V | tail -n1)/terraform_$(curl -sL https://releases.hashicorp.com/terraform/ | grep 'href="/terraform/[0-9]' | cut -d'/' -f3 | sort -V | tail -n1)_linux_amd64.zip" -o terraform.zip
-# unzip terraform.zip
-# mv terraform $INSTALL_DIR/terraform
-# terraform -version
+# wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# sudo apt update && sudo apt install terraform
+# terraform --version
 
 # # Cleanup
 # rm -f kubectl awscliv2.zip terraform.zip
