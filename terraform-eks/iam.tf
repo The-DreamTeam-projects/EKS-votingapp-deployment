@@ -1,5 +1,3 @@
-/*
-
 resource "aws_iam_role" "eks_cluster" {
   name = "jenkins-role"
   assume_role_policy = jsonencode({
@@ -119,5 +117,3 @@ resource "aws_iam_role_policy_attachment" "eks_node_ec2_container_registry" {
 }
 
 
-
-*/
