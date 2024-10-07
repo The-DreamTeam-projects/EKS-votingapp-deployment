@@ -1,3 +1,4 @@
+/*
 resource "aws_iam_role" "eks_cluster" {
   name = "jenkins-role"
   assume_role_policy = jsonencode({
@@ -16,6 +17,7 @@ resource "aws_iam_role" "eks_cluster" {
     Name = "jenkins-role"
   }
 }
+*/
 
 resource "aws_iam_policy" "eks_cluster_policy" {
   name        = "eks-cluster-policy"
