@@ -1,4 +1,3 @@
-
 resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
   role_arn = "arn:aws:iam::058264135500:role/jenkins-role"
@@ -11,12 +10,6 @@ resource "aws_eks_cluster" "my_cluster" {
     Name = var.cluster_name
   }
 }
-
-resource "aws_iam_role_policy_attachment" "eks_cluster_managed" {
-  role       = "jenkins-role"  # Existing role
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-}
-
 resource "aws_eks_node_group" "my_node_group" {
   cluster_name    = aws_eks_cluster.my_cluster.name
   node_group_name = "my-node-group"
