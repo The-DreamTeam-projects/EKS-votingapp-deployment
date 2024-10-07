@@ -191,3 +191,17 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 spring.jpa.hibernate.ddl-auto=update
 
+
+# Reference existing IAM role (jenkins-role) by its ARN
+resource "aws_eks_cluster" "my_cluster" {
+  name     = var.cluster_name
+  role_arn = "arn:aws:iam::058264135500:role/jenkins-role"  # Replace with your jenkins-role ARN
+
+  vpc_config {
+    subnet_ids = aws_subnet.public.*.id
+  }
+
+  tags = {
+    Name = var.cluster_name
+  }
+}
