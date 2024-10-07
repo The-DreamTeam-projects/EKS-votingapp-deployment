@@ -1,17 +1,3 @@
-# Reference existing IAM role (jenkins-role) by its ARN
-resource "aws_eks_cluster" "my_cluster" {
-  name     = var.cluster_name
-  role_arn = "arn:aws:iam::058264135500:role/jenkins-role"  # Replace with your jenkins-role ARN
-
-  vpc_config {
-    subnet_ids = aws_subnet.public.*.id
-  }
-
-  tags = {
-    Name = var.cluster_name
-  }
-}
-
 # Attach the existing role to required policies
 resource "aws_iam_role_policy_attachment" "eks_cluster_managed" {
   role       = "jenkins-role"  # Existing role
