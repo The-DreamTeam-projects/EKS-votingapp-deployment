@@ -49,7 +49,6 @@ pipeline {
                             terraform apply -auto-approve -var="aws_region=${AWS_REGION}" -var="cluster_name=${EKS_CLUSTER_NAME}"
                             '''
                             sh '''
-                            chmod +x /home/ubuntu/bin/kubectl
                             export PATH=/home/ubuntu/bin:$PATH
                             aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
                             kubectl config get-contexts
