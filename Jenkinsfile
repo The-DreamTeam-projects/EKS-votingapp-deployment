@@ -51,7 +51,7 @@ pipeline {
                             sh '''
                             export PATH=/home/ubuntu/bin:$PATH
                             aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
-                            kubectl config get-contexts
+                            //kubectl config get-contexts
                             //kubectl config use-context arn:aws:eks:$AWS_REGION:058264135500:cluster/$EKS_CLUSTER_NAME
                             '''
                         } else if (params.ACTION == 'destroy') {
