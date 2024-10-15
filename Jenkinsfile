@@ -70,7 +70,6 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=/var/lib/jenkins/bin:$PATH
                 kubectl create namespace $NAMESPACE || true
                 '''
             }
@@ -83,7 +82,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
                     sh '''
-                    export PATH=/var/lib/jenkins/bin:$PATH
                     kubectl create secret docker-registry dockerhub-secret \
                     --docker-server=https://index.docker.io/v1/ \
                     --docker-username=${DOCKERHUB_USERNAME} \
