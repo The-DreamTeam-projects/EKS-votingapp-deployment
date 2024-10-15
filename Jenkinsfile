@@ -99,7 +99,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'mysql-root-password', variable: 'MYSQL_ROOT_PASSWORD')]) {
                     sh '''
-                    export PATH=$HOME/bin:/home/ubuntu/bin:$PATH
+                    export PATH=/home/ubuntu/bin:$PATH
                     kubectl create secret generic mysql-root-password \
                     --from-literal=password=${MYSQL_ROOT_PASSWORD} \
                     --namespace=${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
@@ -120,7 +120,7 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=$HOME/bin:/home/ubuntu/bin:$PATH
+                export PATH=/home/ubuntu/bin:$PATH
                 kubectl apply -f k8s/mysql-pv.yml
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-pv-claim.yml | kubectl apply -f -
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-deployment.yml | kubectl apply -f -
@@ -147,7 +147,7 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=$HOME/bin:/home/ubuntu/bin:$PATH
+                export PATH=/home/ubuntu/bin:$PATH
                 kubectl get deployments -n ${NAMESPACE}
                 kubectl get pods -n ${NAMESPACE}
                 kubectl get svc -n ${NAMESPACE}
