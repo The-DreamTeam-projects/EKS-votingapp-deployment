@@ -264,3 +264,14 @@ resource "aws_iam_role_policy_attachment" "eks_node_ec2_container_registry" {
   role       = aws_iam_role.eks_node.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
+
+
+sudo chown -R $(whoami):$(whoami) /home/ubuntu/bin
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.0/2024-09-12/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+mkdir -p $HOME/bin
+cp ./kubectl $HOME/bin/kubectl
+export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+kubectl version --client
