@@ -8,7 +8,7 @@ pipeline {
     environment {
         AWS_REGION = 'us-west-2'
         EKS_CLUSTER_NAME = 'my-voting-app-cluster'
-        NAMESPACE = 'voting-app'
+        NAMESPACE = 'voting-app1'
         MYSQL_IMAGE = 'mysql:latest'
         VOTING_APP_IMAGE = 'dreamteam2024/votingapp:v1'
     }
