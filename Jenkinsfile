@@ -108,17 +108,11 @@ pipeline {
             }
         }
 
-        stage('Deploy MySQL') {
-            when {
-                expression { params.ACTION == 'apply' }
-            }
-            steps {
-                sh '''
-                 stage('Deploy MySQL') {
-            when {
-                expression { params.ACTION == 'apply' }
-            }
-            steps {
+       stage('Deploy MySQL') {  
+         when {
+             expression { params.ACTION == 'apply' }
+        }
+        steps {
                 sh '''
                 export PATH=/home/ubuntu/bin:$PATH
                 kubectl apply -f k8s/mysql-pv.yml
@@ -126,9 +120,8 @@ pipeline {
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-deployment.yml | kubectl apply -f -
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-service.yml | kubectl apply -f -
                 '''
-            }
         }
-
+      }               
         // stage('Deploy Voting Application') {
         //     when {
         //         expression { params.ACTION == 'apply' }
