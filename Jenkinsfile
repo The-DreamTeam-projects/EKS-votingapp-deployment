@@ -49,7 +49,7 @@ pipeline {
                             terraform apply -auto-approve -var="aws_region=${AWS_REGION}" -var="cluster_name=${EKS_CLUSTER_NAME}"
                             '''
                             sh '''
-                            export PATH=/home/ubuntu/bin:$PATH
+                            export PATH=/var/lib/jenkins/bin:$PATH
                             aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
                             //kubectl config get-contexts
                             //kubectl config use-context arn:aws:eks:$AWS_REGION:058264135500:cluster/$EKS_CLUSTER_NAME
@@ -99,7 +99,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'mysql-root-password', variable: 'MYSQL_ROOT_PASSWORD')]) {
                     sh '''
-                    export PATH=/home/ubuntu/bin:$PATH
+                    export PATH=/var/lib/jenkins/bin:$PATH
                     kubectl create secret generic mysql-root-password \
                     --from-literal=password=${MYSQL_ROOT_PASSWORD} \
                     --namespace=${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
@@ -114,7 +114,7 @@ pipeline {
         }
         steps {
                 sh '''
-                export PATH=/home/ubuntu/bin:$PATH
+                export PATH=/var/lib/jenkins/bin:$PATH
                 kubectl apply -f k8s/mysql-pv.yml
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-pv-claim.yml | kubectl apply -f -
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-deployment.yml | kubectl apply -f -
@@ -140,7 +140,7 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=/home/ubuntu/bin:$PATH
+                export PATH=/var/lib/jenkins/bin:$PATH
                 kubectl get deployments -n ${NAMESPACE}
                 kubectl get pods -n ${NAMESPACE}
                 kubectl get svc -n ${NAMESPACE}
