@@ -49,7 +49,7 @@ pipeline {
                             terraform apply -auto-approve -var="aws_region=${AWS_REGION}" -var="cluster_name=${EKS_CLUSTER_NAME}"
                             '''
                             sh '''
-                            export PATH=/var/lib/jenkins/bin:$PATH
+                            export PATH=$PATH:/usr/local/bin
                             aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
                             //kubectl config get-contexts
                             //kubectl config use-context arn:aws:eks:$AWS_REGION:058264135500:cluster/$EKS_CLUSTER_NAME
@@ -70,6 +70,7 @@ pipeline {
             }
             steps {
                 sh '''
+                export PATH=$PATH:/usr/local/bin
                 kubectl create namespace $NAMESPACE || true
                 '''
             }
@@ -82,6 +83,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
                     sh '''
+                    export PATH=$PATH:/usr/local/bin
                     kubectl create secret docker-registry dockerhub-secret \
                     --docker-server=https://index.docker.io/v1/ \
                     --docker-username=${DOCKERHUB_USERNAME} \
@@ -99,7 +101,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'mysql-root-password', variable: 'MYSQL_ROOT_PASSWORD')]) {
                     sh '''
-                    export PATH=/var/lib/jenkins/bin:$PATH
+                    export PATH=$PATH:/usr/local/bin
                     kubectl create secret generic mysql-root-password \
                     --from-literal=password=${MYSQL_ROOT_PASSWORD} \
                     --namespace=${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
@@ -114,7 +116,7 @@ pipeline {
         }
         steps {
                 sh '''
-                export PATH=/var/lib/jenkins/bin:$PATH
+                export PATH=$PATH:/usr/local/bin
                 kubectl apply -f k8s/mysql-pv.yml
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-pv-claim.yml | kubectl apply -f -
                 sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-deployment.yml | kubectl apply -f -
@@ -128,7 +130,7 @@ pipeline {
         //     }
         //     steps {
         //         sh '''
-        //         export PATH=/var/lib/jenkins/bin:$PATH
+        //         export PATH=$PATH:/usr/local/bin
         //         sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-deployment.yml | kubectl apply -f -
         //         sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-service.yml | kubectl apply -f -
         //         '''
@@ -141,7 +143,7 @@ pipeline {
             }
             steps {
                 sh '''
-                export PATH=/var/lib/jenkins/bin:$PATH
+                export PATH=$PATH:/usr/local/bin
                 kubectl get deployments -n ${NAMESPACE}
                 kubectl get pods -n ${NAMESPACE}
                 kubectl get svc -n ${NAMESPACE}
