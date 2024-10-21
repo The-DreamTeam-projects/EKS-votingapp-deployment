@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: ${MYSQL_IMAGE}
+        image: "mysql:latest"
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
