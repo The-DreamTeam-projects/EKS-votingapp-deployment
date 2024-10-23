@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: voting-app
+  namespace: ${NAMESPACE}
 spec:
   replicas: 2
   selector:
@@ -15,13 +15,9 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:latest
+        image: "mysql:latest"
         env:
-        - name: DATABASE_HOST
-          value: mysql.voting-app.svc.cluster.local
-        - name: DATABASE_USER
-          value: root
-        - name: DATABASE_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-root-password
@@ -36,44 +32,4 @@ spec:
         persistentVolumeClaim:
           claimName: mysql-pv-claim
       imagePullSecrets:
-      - name: dockerhub-secret  # Use this if your DockerHub repository is private
-
-
-
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql
-#   namespace: ${NAMESPACE}
-# spec:
-#   replicas: 2
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#       - name: mysql
-#         image: "mysql:latest"
-#         env:
-#         - name: MYSQL_ROOT_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-root-password
-#               key: password
-#         ports:
-#         - containerPort: 3306
-#         volumeMounts:
-#         - name: mysql-persistent-storage
-#           mountPath: /var/lib/mysql
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pv-claim
-#       imagePullSecrets:
-#       - name: dockerhub-secret  # Add this line if your DockerHub repository is private
+      - name: dockerhub-secret  # Add this line if your DockerHub repository is private
