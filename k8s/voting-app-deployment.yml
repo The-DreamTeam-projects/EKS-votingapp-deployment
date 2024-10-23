@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: voting-app
-  namespace: ${NAMESPACE}
+  namespace: voting-app
 spec:
   replicas: 3
   selector:
@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
       - name: voting-app
-        image: ${VOTING_APP_IMAGE}
+        image: dreamteam2024/votingapp:v1
         env:
         - name: DATABASE_HOST
-          value: mysql.${NAMESPACE}.svc.cluster.local
+          value: mysql.voting-app.svc.cluster.local
         - name: DATABASE_USER
           value: root
         - name: DATABASE_PASSWORD
