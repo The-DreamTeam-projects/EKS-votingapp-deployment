@@ -32,10 +32,16 @@ spec:
             secretKeyRef:
               name: db-secrets
               key: DB_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-root-password
+              key: password
         ports:
         - containerPort: 80
       imagePullSecrets:
       - name: dockerhub-secret  # Use if DockerHub repository is private
+
 
 
 
