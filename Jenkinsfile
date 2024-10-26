@@ -113,7 +113,59 @@ pipeline {
             }
         }
 
-        // The remaining stages (Deploy MySQL, Deploy Voting Application, etc.) remain the same
+        stage('Deploy MySQL') {  
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                sh '''
+                export PATH=$PATH:/usr/local/bin
+                kubectl apply -f k8s/mysql-pv.yml
+                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-pv-claim.yml | kubectl apply -f -
+                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-deployment.yml | kubectl apply -f -
+                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/mysql-service.yml | kubectl apply -f -
+                '''
+            }
+        }
+
+        stage('Deploy Voting Application') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                sh '''
+                export PATH=$PATH:/usr/local/bin
+                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-deployment.yml | kubectl apply -f -
+                sed "s/\\${NAMESPACE}/${NAMESPACE}/g" k8s/voting-app-service.yml | kubectl apply -f -
+                '''
+            }
+        }
+
+        stage('Verify Deployment') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                sh '''
+                export PATH=$PATH:/usr/local/bin
+                kubectl get deployments -n ${NAMESPACE}
+                kubectl get pods -n ${NAMESPACE}
+                kubectl get svc -n ${NAMESPACE}
+                '''
+            }
+        }
+
+        stage('Get Application URL') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                script {
+                    def svc = sh(script: "kubectl get svc voting-app -n ${NAMESPACE} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'", returnStdout: true).trim()
+                    echo "Application is accessible at: http://$svc"
+                }
+            }
+        }
     }
 }
 
