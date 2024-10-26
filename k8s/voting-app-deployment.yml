@@ -35,7 +35,8 @@ spec:
         ports:
         - containerPort: 80
       imagePullSecrets:
-      - name: dockerhub-secret  # Add this line if your DockerHub repository is private
+      - name: dockerhub-secret  # Use if DockerHub repository is private
+
 
 
 
