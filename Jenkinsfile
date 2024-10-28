@@ -81,21 +81,21 @@ pipeline {
             }
         }
 
-        stage('Create DB Secrets') {
-            when {
-                expression { params.ACTION == 'apply' }
-            }
-            steps {
-                sh '''
-                export PATH=$PATH:/usr/local/bin
-                kubectl create secret generic db-secrets \
-                --from-literal=DB_HOST=mysql.voting-app.svc.cluster.local \
-                --from-literal=DB_USER=root \
-                --from-literal=DB_PASSWORD=rootpassword \
-                --namespace=${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-                '''
-            }
-        }
+        // stage('Create DB Secrets') {
+        //     when {
+        //         expression { params.ACTION == 'apply' }
+        //     }
+        //     steps {
+        //         sh '''
+        //         export PATH=$PATH:/usr/local/bin
+        //         kubectl create secret generic db-secrets \
+        //         --from-literal=DB_HOST=mysql.voting-app.svc.cluster.local \
+        //         --from-literal=DB_USER=root \
+        //         --from-literal=DB_PASSWORD=rootpassword \
+        //         --namespace=${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+        //         '''
+        //     }
+        // }
 
         stage('Create MySQL Secret') {
             when {
