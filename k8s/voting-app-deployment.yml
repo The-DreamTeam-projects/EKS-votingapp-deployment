@@ -18,29 +18,68 @@ spec:
         image: dreamteam2024/votingapp:v1
         env:
         - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: db-secrets
-              key: DB_HOST
+          value: "mysql.voting-app.svc.cluster.local"
         - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: db-secrets
-              key: DB_USER
+          value: "root"
         - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secrets
-              key: DB_PASSWORD
+          value: "rootpassword"
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-root-password
-              key: password
+          value: "rootpassword"
         ports:
         - containerPort: 80
       imagePullSecrets:
       - name: dockerhub-secret  # Use if DockerHub repository is private
+
+
+
+
+
+
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: voting-app
+#   namespace: voting-app
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: voting-app
+#   template:
+#     metadata:
+#       labels:
+#         app: voting-app
+#     spec:
+#       containers:
+#       - name: voting-app
+#         image: dreamteam2024/votingapp:v1
+#         env:
+#         - name: DB_HOST
+#           valueFrom:
+#             secretKeyRef:
+#               name: db-secrets
+#               key: DB_HOST
+#         - name: DB_USER
+#           valueFrom:
+#             secretKeyRef:
+#               name: db-secrets
+#               key: DB_USER
+#         - name: DB_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: db-secrets
+#               key: DB_PASSWORD
+#         - name: MYSQL_ROOT_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: mysql-root-password
+#               key: password
+#         ports:
+#         - containerPort: 80
+#       imagePullSecrets:
+#       - name: dockerhub-secret  # Use if DockerHub repository is private
 
 
 
